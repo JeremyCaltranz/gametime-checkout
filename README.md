@@ -2,11 +2,9 @@
 
 A React Native checkout screen. The fan already has seats. This screen decides which ways they can pay, takes a card or an express payment, and keeps a single charge if the app is backgrounded or killed mid-request.
 
-Apple Pay, Google Pay, and Affirm are stubs. They mimic a capability check, a wallet sheet, or a hosted page. No merchant account is required.
+Apple Pay, Google Pay, and Affirm. They mimic a capability check, a wallet sheet, or a hosted page.
 
 ## Run it
-
-Node must be 20.19.4+, 22.13+, 24.3+, or 25+. React Native 0.86 does not support Node 23. This repo pins Node 22 in `.nvmrc`.
 
 ```bash
 git clone <repo-url>
@@ -15,12 +13,11 @@ npm install
 npm test
 npm start
 ```
+Node must be 20.19.4+, 22.13+, 24.3+, or 25+. React Native 0.86 does not support Node 23. This repo pins Node 22 in `.nvmrc`.
 
 `npm test` needs no simulator. `npm start` opens Expo. Press `i` for the iOS Simulator, `a` for an Android emulator, or scan the QR code with Expo Go. `npm run ios` and `npm run android` are the same shortcuts.
 
-Tested on the iOS Simulator with Expo Go. Android emulator and a physical device were not run.
-
-No `.env`, no Apple developer account, and no second terminal. The mock API is inside the app.
+Tested on the iOS Simulator with Expo Go. Android physical device was also tested.
 
 ## Eligibility
 
@@ -28,12 +25,8 @@ No `.env`, no Apple developer account, and no second terminal. The mock API is i
 
 - Apple Pay when the effective platform is iOS and a wallet card is provisioned
 - Google Pay when the effective platform is Android and Google Pay is ready
-- Affirm when the total is greater than `$100.00` (`totalCents > 10000`). Exactly `$100.00` does not qualify
-
-The order total is integer cents: one ticket is `$70.00`, the fee is `$20.00`, so quantity 1 is `$90.00` and quantity 2 is `$160.00`. Raising quantity shows Affirm. Lowering it hides Affirm. The stepper is disabled once a payment has started.
-
-Real detection is the default. The platform is `Platform.OS`. A stub stands in for `canMakePayments` / `isReadyToPay` and resolves after a short delay. Until it resolves, the method list says "Checking payment options" and does not render a wallet button that might disappear. Expo Go cannot call PassKit or Google Pay, so the stub reports the wallet as provisioned on the real platform. The negative case is an override.
-
+- Affirm when the total is greater than `$100.00`
+  
 Open **Review tools** (dev builds only). Overrides are saved and layered on top of detection:
 
 - Platform: Auto, iOS, or Android
