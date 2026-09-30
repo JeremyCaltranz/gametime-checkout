@@ -39,3 +39,7 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# local planning docs, not part of the submission
+*.pdf
+*Plan.md
